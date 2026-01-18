@@ -37,8 +37,16 @@ function AddNewInterview() {
     try {
       const InputPromt = `
       Assume you are an AI Mock Interview Expert, designed to generate concise, voice-answerable interview questions.
+      Generate EXACTLY one JSON object and NOTHING else (no markdown, no explanations, no code fences).
       Dont keep the questions open ended so that it can be evaluated easily with AI and answers
-  
+
+      ### Requirements:
+      1) Output MUST be a single JSON object with the key "interview_questions" whose value is an ARRAY of exactly 5 question objects.
+      2) Do NOT output any surrounding text, comments or code fences — only raw JSON.
+      3) Each question object MUST have the following keys and types:
+        - id: integer (1 through 5)
+        - question: string (concise, direct, voice-answerable, <= 200 characters)
+
       ### Instructions:
       1. Create **5 interview questions** tailored to the following:
           - **Job Position**: ${jobPosition}
@@ -46,7 +54,16 @@ function AddNewInterview() {
           - **Years of Experience**: ${jobExperience}
       2. The questions should be **specific and direct**, ensuring they can be evaluated objectively using AI. Avoid open-ended or overly broad questions.
       3. Dont ask any code snippets and all since it is not feasible to explain orally.
-      4. give strictly in JSON format based on the following. Only return the JSON, without any additional text.
+      4. give strictly 5 questions in JSON format based on the following. Only return the JSON object with key \"interview_questions\" , without any additional text.
+      5. Return example (for format reference ONLY; DO NOT return this example in output — it is shown here to illustrate schema):
+        {
+          "interview_questions": [
+            {
+              "id": 1,
+              "question": "Explain the difference between HTTP GET and POST and when to use each.",
+            }
+          ]
+        }
       `;
 
       const result = await chatSession.sendMessage(InputPromt);

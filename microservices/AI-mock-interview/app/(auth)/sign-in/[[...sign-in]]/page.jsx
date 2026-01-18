@@ -77,7 +77,7 @@ export default function Page() {
               Practise with ease and crack your favourite company
               </p>
             </div>
-            <div classNameName="h-12">
+            <div className="h-12">
               
             </div>
 

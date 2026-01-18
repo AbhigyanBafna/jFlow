@@ -21,18 +21,48 @@ function StartInterview({ params }) {
    */
 
   const GetInterviewDetail = async () => {
-    const result = await db
-      .select()
-      .from(MockInterview)
-      .where(eq(MockInterview.mockId, params.interviewId));
-    
-    console.log("result:", result);
+    try {
+      const result = await db
+        .select()
+        .from(MockInterview)
+        .where(eq(MockInterview.mockId, params.interviewId));
 
-    const jsonMockResp = JSON.parse(result[0]?.jsonMockResp);
-    console.log("jsonMockResp:", jsonMockResp);
-    setMockInterviewQuestion(jsonMockResp.questions);
+      if (!result || !result.length) {
+        console.warn("No interview found for mockId:", params.interviewId);
+        return;
+      }
 
-    setInterviewData(result[0]);
+      console.log("result:", result);
+      const raw = result[0]?.jsonMockResp;
+      if (!raw) {
+        console.warn("No jsonMockResp on record:", result[0]);
+        setInterviewData(result[0]);
+        return;
+      }
+
+      let jsonMockResp;
+      try {
+        jsonMockResp = JSON.parse(raw);
+      } catch (err) {
+        console.error("Failed to parse jsonMockResp:", err, raw);
+        return;
+      }
+
+      console.log("jsonMockResp:", jsonMockResp);
+      // Support both possible keys
+      const questions =
+        jsonMockResp.interview_questions || jsonMockResp.questions || [];
+
+      if (!Array.isArray(questions) || questions.length === 0) {
+        console.warn("No questions array found in jsonMockResp");
+      } else {
+        setMockInterviewQuestion(questions);
+      }
+
+      setInterviewData(result[0]);
+    } catch (err) {
+      console.error("GetInterviewDetail error:", err);
+    }
   };
 
   return (

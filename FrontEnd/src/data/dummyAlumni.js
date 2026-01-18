@@ -115,4 +115,75 @@ for (let i = 3; i <= 100; i++) {
     });
 }
 
+// Add TSEC specific data
+const tsecNames = [
+    "Aditya Shah",
+    "Riya Mehta",
+    "Kunal Punjabi",
+    "Prachi Savla",
+    "Dhruv Gala",
+    "Shreya Kothari",
+    "Vishal Sanghvi",
+    "Tanvi Sheth",
+    "Rohan Parekh",
+    "Nishi Doshi",
+    "Jay Thakkar",
+    "Mansi Gandhi",
+    "Harsh Dedhia",
+    "Khushi Pathak",
+    "Raj Mehta",
+    "Diya Shah",
+    "Parth Vora",
+    "Ishita Jain",
+    "Mihir Sheth",
+    "Krisha Thakkar"
+];
+
+const tsecRoles = [
+    "Full Stack Developer",
+    "Machine Learning Engineer",
+    "Cloud Solutions Architect",
+    "Data Engineer",
+    "Backend Developer",
+    "Frontend Developer",
+    "DevOps Specialist",
+    "System Analyst",
+    "Software Development Engineer",
+    "Technical Lead"
+];
+
+const mumbaiCompanies = [
+    "JP Morgan Chase",
+    "Morgan Stanley",
+    "Deutsche Bank",
+    "Nomura",
+    "Credit Suisse",
+    "Accenture",
+    "Capgemini",
+    "LTI Mindtree",
+    "Amdocs",
+    "Deloitte"
+];
+
+// Add 20 TSEC alumni
+const tsecAlumni = tsecNames.map((name, index) => ({
+    id: dummyAlumni.length + index + 1,
+    name,
+    profilePic: `https://i.pravatar.cc/150?img=${(index + 71) % 100}`,
+    currentCompany: mumbaiCompanies[Math.floor(Math.random() * mumbaiCompanies.length)],
+    role: tsecRoles[Math.floor(Math.random() * tsecRoles.length)],
+    location: "Mumbai",
+    pastCollege: "Thadomal Shahani Engineering College",
+    yearsOfExperience: Math.floor(Math.random() * 8) + 1, // 1-8 years experience
+    skills: Array.from(
+        { length: 4 },
+        () => skills[Math.floor(Math.random() * skills.length)]
+    ),
+    industry: "Technology",
+    linkedinUrl: `https://linkedin.com/in/${name.toLowerCase().replace(' ', '-')}`,
+}));
+
+// Add TSEC alumni to main array
+dummyAlumni.push(...tsecAlumni);
+
 export default dummyAlumni;

@@ -15,6 +15,8 @@ function QuestionsSections({ activeQuestionIndex, mockInterViewQuestion }) {
     console.log("mockinterview quest", mockInterViewQuestion);
   }
 
+  console.log("FINAL CHECK", mockInterViewQuestion);
+  console.log("mockInterViewQuestion type", Array.isArray(mockInterViewQuestion));
     // Add check for array and valid data
     if (!mockInterViewQuestion || !Array.isArray(mockInterViewQuestion)) {
       return <div>Loading questions...</div>;
